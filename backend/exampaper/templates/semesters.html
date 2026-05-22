@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block title %}{{ department.name }} — Semesters{% endblock %}
+
+{% block breadcrumb %}
+<div class="breadcrumb-bar">
+    <div class="container">
+        <nav class="breadcrumb">
+            <a href="{% url 'index' %}"><i class="fas fa-home"></i> Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <a href="{% url 'department_list' %}">Departments</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>{{ department.short_name|default:department.name }}</span>
+        </nav>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="page-hero" style="--hero-color: {{ department.color }}">
+    <div class="container">
+        <div class="page-hero-icon">
+            <i class="fas {{ department.icon }}"></i>
+        </div>
+        <h1>{{ department.name }}</h1>
+        <p>{{ department.description|default:"Browse exam papers by semester" }}</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Choose a Semester</h2>
+            <p class="section-subtitle">Select the semester to view its subjects and exam papers</p>
+        </div>
+
+        <div class="semester-grid">
+            {% for sem in semesters %}
+            <a href="{% url 'subject_list' department.slug sem.number %}"
+                class="semester-card {% if sem.total_papers == 0 %}semester-empty{% endif %}">
+                <div class="sem-number">{{ sem.roman_numeral }}</div>
+                <div class="sem-body">
+                    <h3>Semester {{ sem.roman_numeral }}</h3>
+                    <div class="sem-meta">
+                        <span><i class="fas fa-book"></i> {{ sem.total_subjects }} Subject{{
+                            sem.total_subjects|pluralize }}</span>
+                        <span><i class="fas fa-file-alt"></i> {{ sem.total_papers }} Paper{{ sem.total_papers|pluralize
+                            }}</span>
+                    </div>
+                </div>
+                <div class="sem-arrow">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                {% if sem.total_papers == 0 %}
+                <div class="sem-coming-soon">Coming Soon</div>
+                {% endif %}
+            </a>
+            {% empty %}
+            <!-- Auto-generate 8 semesters if none exist yet -->
+            {% for i in "12345678" %}
+            <div class="semester-card semester-empty">
+                <div class="sem-number">{{ forloop.counter }}</div>
+                <div class="sem-body">
+                    <h3>Semester {{ forloop.counter }}</h3>
+                    <div class="sem-meta">
+                        <span>No subjects yet</span>
+                    </div>
+                </div>
+                <div class="sem-coming-soon">Not Setup</div>
+            </div>
+            {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

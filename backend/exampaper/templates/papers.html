@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% block title %}{{ subject.name }} — Exam Papers{% endblock %}
+
+{% block breadcrumb %}
+<div class="breadcrumb-bar">
+    <div class="container">
+        <nav class="breadcrumb">
+            <a href="{% url 'index' %}"><i class="fas fa-home"></i> Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <a href="{% url 'department_list' %}">Departments</a>
+            <i class="fas fa-chevron-right"></i>
+            <a href="{% url 'semester_list' department.slug %}">{{ department.short_name|default:department.name }}</a>
+            <i class="fas fa-chevron-right"></i>
+            <a href="{% url 'subject_list' department.slug semester.number %}">{{ semester.display_name }}</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>{{ subject.code }}</span>
+        </nav>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="page-hero page-hero-sm" style="--hero-color: {{ subject.department.color }}">
+    <div class="container">
+        <div class="subject-hero-info">
+            <div class="subject-code-hero">{{ subject.code }}</div>
+            <h1>{{ subject.name }}</h1>
+            <div class="subject-hero-meta">
+                <span><i class="fas fa-layer-group"></i> {{ department.name }}</span>
+                <span><i class="fas fa-calendar-alt"></i> {{ semester.display_name }}</span>
+                <span><i class="fas fa-credit-card"></i> {{ subject.credit_hours }} Credit Hours</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── Filters ── -->
+<div class="filter-bar">
+    <div class="container">
+        <form method="GET" class="filter-form" id="filterForm">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label for="yearSelect"><i class="fas fa-calendar"></i> Year</label>
+                    <select name="year" id="yearSelect" onchange="this.form.submit()">
+                        <option value="">All Years</option>
+                        {% for yr in available_years %}
+                        <option value="{{ yr }}" {% if selected_year==yr|stringformat:"s" %}selected{% endif %}>{{ yr }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="typeSelect"><i class="fas fa-tag"></i> Exam Type</label>
+                    <select name="type" id="typeSelect" onchange="this.form.submit()">
+                        <option value="">All Types</option>
+                        {% for val, label in exam_types %}
+                        <option value="{{ val }}" {% if selected_type==val %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% if selected_year or selected_type %}
+                <a href="{% url 'paper_list' subject.slug %}" class="btn btn-ghost btn-sm filter-reset">
+                    <i class="fas fa-times"></i> Clear Filters
+                </a>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ── Papers List ── -->
+<section class="section">
+    <div class="container">
+        {% if page_obj %}
+        <div class="results-meta">
+            <span>{{ page_obj.paginator.count }} paper{{ page_obj.paginator.count|pluralize }} found</span>
+        </div>
+
+        <div class="papers-list">
+            {% for paper in page_obj %}
+            <div class="paper-row">
+                <div class="paper-row-icon">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <div class="paper-row-body">
+                    <h3 class="paper-row-title">
+                        {{ subject.name }} — {{ paper.year }}
+                        <span class="paper-type-badge paper-type-{{ paper.exam_type }}">{{ paper.get_exam_type_display
+                            }}</span>
+                    </h3>
+                    <div class="paper-row-meta">
+                        <span><i class="fas fa-calendar"></i> {{ paper.year }}</span>
+                        <span><i class="fas fa-upload"></i> {{ paper.uploaded_at|date:"M d, Y" }}</span>
+                        <span><i class="fas fa-download"></i> {{ paper.download_count }} downloads</span>
+                    </div>
+                </div>
+                <div class="paper-row-actions">
+                    <a href="{% url 'view_paper' paper.id %}" class="btn btn-ghost btn-sm" target="_blank"
+                        title="View PDF">
+                        <i class="fas fa-eye"></i> <span>View</span>
+                    </a>
+                    <a href="{% url 'download_paper' paper.id %}" class="btn btn-primary btn-sm" title="Download PDF">
+                        <i class="fas fa-download"></i> <span>Download</span>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% if page_obj.has_other_pages %}
+        <div class="pagination">
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}{% if selected_year %}&year={{ selected_year }}{% endif %}{% if selected_type %}&type={{ selected_type }}{% endif %}"
+                class="page-btn">
+                <i class="fas fa-chevron-left"></i> Prev
+            </a>
+            {% endif %}
+            <span class="page-info">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}{% if selected_year %}&year={{ selected_year }}{% endif %}{% if selected_type %}&type={{ selected_type }}{% endif %}"
+                class="page-btn">
+                Next <i class="fas fa-chevron-right"></i>
+            </a>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% else %}
+        <div class="empty-state">
+            <i class="fas fa-file-alt empty-icon"></i>
+            <h3>No Papers Found</h3>
+            <p>
+                {% if selected_year or selected_type %}
+                No papers match the selected filters. <a href="{% url 'paper_list' subject.slug %}">Clear filters</a> to
+                see all.
+                {% else %}
+                No exam papers have been uploaded for this subject yet. Check back later.
+                {% endif %}
+            </p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

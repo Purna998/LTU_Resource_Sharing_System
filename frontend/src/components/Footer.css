@@ -1,0 +1,207 @@
+/* ================================================
+   FOOTER - LTU Scholar Blue Theme
+   ================================================ */
+
+.theme-footer {
+  background: var(--brand-primary);
+  color: rgba(255, 255, 255, 0.75);
+  padding: 4rem 0 2rem 0;
+  margin-top: auto;
+}
+
+[data-theme='dark'] .theme-footer {
+  background: #040d1f;
+  border-top: 1px solid rgba(37, 99, 235, 0.15);
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 1.5fr 2fr;
+  gap: 4rem;
+  margin-bottom: 3rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+
+.footer-logo-img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  transition: all 0.3s ease;
+}
+
+.logo-main-text-footer {
+  font-weight: 800;
+  font-size: 1.3rem;
+  color: #ffffff;
+}
+
+.logo-sub-text-footer {
+  font-size: 0.55rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.footer-logo svg { color: var(--brand-accent-lighter); }
+
+.footer-desc {
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.7;
+  max-width: 300px;
+  font-size: 0.9rem;
+}
+
+.social-links {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.social-links a {
+  color: rgba(255, 255, 255, 0.6);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.social-links a:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+.footer-links-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.footer-column h3 {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 1.25rem;
+}
+
+.footer-column ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  padding: 0;
+}
+
+.footer-column a {
+  color: rgba(255, 255, 255, 0.55);
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color 0.2s;
+}
+
+.footer-column a:hover {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.8rem;
+}
+
+.footer-bottom p { margin: 0; }
+
+.footer-bottom-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footer-bottom-links a {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.8rem;
+  transition: color 0.2s;
+  text-decoration: none;
+}
+
+.footer-bottom-links a:hover { color: rgba(255, 255, 255, 0.7); }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .footer-top {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .footer-links-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .footer-bottom {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .footer-bottom-links { justify-content: center; flex-wrap: wrap; }
+}
+
+@media (max-width: 480px) {
+  .footer-links-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .theme-footer { padding: 3rem 0 1.5rem; }
+
+  .footer-logo-img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .logo-main-text-footer {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .footer-logo-img {
+    width: 38px;
+    height: 38px;
+  }
+
+  .logo-main-text-footer {
+    font-size: 0.95rem;
+  }
+
+  .logo-sub-text-footer {
+    display: none;
+  }
+}

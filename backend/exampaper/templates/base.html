@@ -1,0 +1,147 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="LTU Exam Paper Portal — Access previous year exam papers for all departments at Lumbini Technological University">
+    <meta name="theme-color" content="#6366f1">
+    <title>{% block title %}LTU Exam Papers — Lumbini Technological University{% endblock %}</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+    <!-- ── Navbar ── -->
+    <header class="navbar" id="navbar">
+        <nav class="nav-container">
+            <a href="{% url 'index' %}" class="nav-logo">
+                <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
+                <div class="logo-text">
+                    <span class="logo-main">LTU</span>
+                    <span class="logo-sub">Exam Papers</span>
+                </div>
+            </a>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="{% url 'index' %}"
+                        class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}">
+                        <i class="fas fa-home"></i> Home
+                    </a></li>
+                <li><a href="{% url 'department_list' %}"
+                        class="{% if request.resolver_match.url_name == 'department_list' %}active{% endif %}">
+                        <i class="fas fa-layer-group"></i> Departments
+                    </a></li>
+                <li><a href="{% url 'search' %}"
+                        class="{% if request.resolver_match.url_name == 'search' %}active{% endif %}">
+                        <i class="fas fa-search"></i> Search
+                    </a></li>
+                <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+
+            <!-- Search Bar in Nav -->
+            <form class="nav-search" action="{% url 'search' %}" method="GET">
+                <input type="text" name="q" placeholder="Search papers..." value="{{ request.GET.q }}"
+                    autocomplete="off">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+
+            <!-- Hamburger -->
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Breadcrumb -->
+    {% block breadcrumb %}{% endblock %}
+
+    <!-- Main Content -->
+    <main id="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- ── Footer ── -->
+    <footer class="footer" id="contact">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>LTU Exam Papers</span>
+                </div>
+                <p>Your trusted source for previous year exam papers at Lumbini Technological University, Rupandehi,
+                    Nepal.</p>
+                <div class="footer-social">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="{% url 'index' %}"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="{% url 'department_list' %}"><i class="fas fa-chevron-right"></i> Departments</a></li>
+                    <li><a href="{% url 'search' %}"><i class="fas fa-chevron-right"></i> Search Papers</a></li>
+                    <li><a href="/admin/"><i class="fas fa-chevron-right"></i> Admin Panel</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>Departments</h4>
+                <ul>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> B.Tech CS &amp; AI</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> B.Tech IT</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> B.Tech ITE</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> B.Tech Civil</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-contact">
+                <h4>Contact</h4>
+                <div class="footer-contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Lumbini Technological University,<br>Rupandehi, Province No. 5, Nepal</span>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>info@ltu.edu.np</span>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fas fa-globe"></i>
+                    <span>www.ltu.edu.np</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 LTU Exam Paper Portal. Made with <i class="fas fa-heart"></i> for LTU Students.</p>
+            <p class="footer-disclaimer">All rights and policies </p>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+
+</html>

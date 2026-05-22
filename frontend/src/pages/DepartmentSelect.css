@@ -1,0 +1,213 @@
+/* ================================================
+   DEPARTMENT SELECT - LTU Scholar Blue Theme
+   ================================================ */
+
+.dept-view-container {
+  background: var(--bg-color);
+  min-height: 100vh;
+}
+
+/* Hero Banner */
+.dept-hero-banner {
+  background: var(--hero-gradient);
+  position: relative;
+  overflow: hidden;
+  padding: 3.5rem 0;
+}
+
+.dept-hero-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+}
+
+.dept-hero-banner .breadcrumb {
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 1.25rem;
+}
+
+.dept-hero-banner .breadcrumb a {
+  color: rgba(255,255,255,0.65);
+}
+
+.dept-hero-banner .breadcrumb a:hover {
+  color: white;
+}
+
+.dept-hero-banner .breadcrumb .current {
+  color: rgba(255,255,255,0.9);
+}
+
+.dept-title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.875rem;
+}
+
+.dept-desc {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.72);
+  margin-bottom: 1.5rem;
+  max-width: 680px;
+  line-height: 1.65;
+}
+
+.dept-meta {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* Semester Selection */
+.semester-select-section {
+  padding: 3rem 0 5rem;
+}
+
+.section-header-compact {
+  margin-bottom: 2rem;
+}
+
+.section-title-small {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.35rem;
+  color: var(--text-primary);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* Semester Grid */
+.semester-grid-exclusive {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.25rem;
+}
+
+.semester-premium-card {
+  background: var(--surface-color);
+  border: 1.5px solid var(--border-color);
+  border-radius: 14px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  overflow: hidden;
+}
+
+.semester-premium-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--brand-accent);
+  border-radius: 0 2px 2px 0;
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+}
+
+.semester-premium-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--brand-accent-light);
+  box-shadow: var(--card-shadow);
+}
+
+.semester-premium-card:hover::before {
+  transform: scaleY(1);
+}
+
+.sem-number-glow {
+  width: 54px;
+  height: 54px;
+  background: rgba(37, 99, 235, 0.08);
+  color: var(--brand-accent);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  font-weight: 800;
+  flex-shrink: 0;
+  border: 1.5px solid rgba(37, 99, 235, 0.15);
+  transition: all 0.3s;
+  letter-spacing: -0.02em;
+}
+
+.semester-premium-card:hover .sem-number-glow {
+  background: var(--brand-accent);
+  color: white;
+  border-color: var(--brand-accent);
+}
+
+.sem-info {
+  flex-grow: 1;
+}
+
+.sem-info h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.3rem;
+}
+
+.sem-stats {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.sem-action-icon {
+  color: var(--text-muted);
+  transition: all 0.2s;
+}
+
+.semester-premium-card:hover .sem-action-icon {
+  color: var(--brand-accent);
+  transform: translateX(4px);
+}
+
+/* Loading / Error */
+.py-12 {
+  padding-top: 3rem;
+  padding-bottom: 5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dept-hero-banner { padding: 2.5rem 0; }
+  .dept-title { font-size: 1.6rem; }
+  .dept-desc { font-size: 0.9rem; }
+  .semester-select-section { padding: 2rem 0 3rem; }
+
+  .semester-grid-exclusive {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .semester-premium-card { padding: 1.25rem; }
+
+  .sem-number-glow {
+    width: 46px;
+    height: 46px;
+    font-size: 1.1rem;
+    border-radius: 10px;
+  }
+}

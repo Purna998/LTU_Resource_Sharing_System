@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block title %}{{ semester.display_name }} — {{ department.name }}{% endblock %}
+
+{% block breadcrumb %}
+<div class="breadcrumb-bar">
+    <div class="container">
+        <nav class="breadcrumb">
+            <a href="{% url 'index' %}"><i class="fas fa-home"></i> Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <a href="{% url 'department_list' %}">Departments</a>
+            <i class="fas fa-chevron-right"></i>
+            <a href="{% url 'semester_list' department.slug %}">{{ department.short_name|default:department.name }}</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>{{ semester.display_name }}</span>
+        </nav>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="page-hero" style="--hero-color: {{ department.color }}">
+    <div class="container">
+        <div class="page-hero-icon">
+            <i class="fas fa-calendar-alt"></i>
+        </div>
+        <h1>{{ semester.display_name }}</h1>
+        <p>{{ department.name }} — Choose a subject to browse exam papers</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Subjects in {{ semester.display_name }}</h2>
+            <p class="section-subtitle">{{ subjects.count }} subject{{ subjects.count|pluralize }} available</p>
+        </div>
+
+        {% if subjects %}
+        <div class="subject-grid">
+            {% for subject in subjects %}
+            <a href="{% url 'paper_list' subject.slug %}" class="subject-card">
+                <div class="subject-code-badge">{{ subject.code }}</div>
+                <div class="subject-body">
+                    <h3 class="subject-name">{{ subject.name }}</h3>
+                    <div class="subject-meta">
+                        <span><i class="fas fa-credit-card"></i> {{ subject.credit_hours }} Credits</span>
+                        <span>
+                            <i class="fas fa-file-alt"></i>
+                            {% if subject.total_papers > 0 %}
+                            {{ subject.total_papers }} Paper{{ subject.total_papers|pluralize }}
+                            {% else %}
+                            No papers yet
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+                <div class="subject-arrow {% if subject.total_papers == 0 %}arrow-muted{% endif %}">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="fas fa-book-open empty-icon"></i>
+            <h3>No Subjects Yet</h3>
+            <p>Subjects for this semester haven't been added yet. Check back soon!</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

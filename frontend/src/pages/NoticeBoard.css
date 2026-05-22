@@ -1,0 +1,114 @@
+/* ================================================
+   NOTICE BOARD - LTU Scholar Blue Theme
+   ================================================ */
+
+.notice-board-container {
+  background: var(--bg-color);
+  min-height: 100vh;
+}
+
+.notice-board {
+  padding: 3rem 0 5rem;
+}
+
+.notices-wrapper-premium {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.notice-item-full {
+  background: var(--surface-color);
+  border: 1.5px solid var(--border-color);
+  border-radius: 14px;
+  padding: 2rem 2.5rem;
+  list-style: none;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.notice-item-full::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--brand-accent);
+  border-radius: 0 2px 2px 0;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.notice-item-full:hover {
+  border-color: var(--brand-accent-light);
+  box-shadow: var(--card-shadow);
+}
+
+.notice-item-full:hover::before {
+  opacity: 1;
+}
+
+.notice-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.875rem;
+  flex-wrap: wrap;
+}
+
+.notice-date {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--brand-accent);
+  letter-spacing: 0.07em;
+  background: rgba(37, 99, 235, 0.08);
+  padding: 0.2rem 0.6rem;
+  border-radius: 5px;
+  border: 1px solid rgba(37, 99, 235, 0.15);
+}
+
+.notice-tag {
+  background: rgba(37, 99, 235, 0.07);
+  color: var(--brand-accent);
+  padding: 0.2rem 0.7rem;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  border: 1px solid rgba(37, 99, 235, 0.15);
+  letter-spacing: 0.02em;
+}
+
+.notice-title-full {
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.notice-content {
+  font-size: 0.975rem;
+  line-height: 1.75;
+  color: var(--text-secondary);
+  white-space: pre-wrap;
+}
+
+@media (max-width: 768px) {
+  .notice-board { padding: 2rem 0 3rem; }
+
+  .notice-item-full {
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+
+  .notice-title-full { font-size: 1.2rem; }
+  .notice-content { font-size: 0.9rem; }
+}
+
+@media (max-width: 480px) {
+  .notice-item-full { padding: 1.25rem; }
+}
