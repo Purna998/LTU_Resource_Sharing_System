@@ -69,7 +69,7 @@ else:
 DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = os.environ.get(
-    'ALLOWED_HOSTS', 'localhost,127.0.0.1'
+    'ALLOWED_HOSTS', 'localhost,127.0.0.1,ltu-resource-sharing-backend-r91n.onrender.com'
 ).split(',')
 
 # Strip whitespace from host entries (common misconfiguration)
@@ -411,4 +411,5 @@ CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1:8080',
     'http://localhost:5173',
     'http://127.0.0.1:5173',
+    'https://ltu-resource-sharing-backend-r91n.onrender.com',
 ]
