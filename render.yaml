@@ -3,7 +3,7 @@ services:
     name: note-sharing-backend
     env: python
     rootDir: backend
-    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate && python manage.py createsuperuser --username purnaacharya --email admin@example.com --noinput || true"
+    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate && python setup_superuser.py"
     startCommand: "gunicorn resourcesharing.wsgi:application"
     plan: free # Change to "starter" if you are using a paid tier
     envVars:
