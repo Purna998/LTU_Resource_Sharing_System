@@ -3,7 +3,7 @@ services:
     name: note-sharing-backend
     env: python
     rootDir: backend
-    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate"
+    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate && python manage.py createsuperuser --username purnaacharya --email admin@example.com --noinput || true"
     startCommand: "gunicorn resourcesharing.wsgi:application"
     plan: free # Change to "starter" if you are using a paid tier
     envVars:
@@ -21,3 +21,5 @@ services:
         sync: false # You will provide this from Upstash in the Render Dashboard
       - key: CORS_ALLOWED_ORIGINS
         sync: false # You will provide your Vercel URL here in the Render Dashboard
+      - key: DJANGO_SUPERUSER_PASSWORD
+        sync: false
