@@ -85,7 +85,10 @@ class Command(BaseCommand):
                         link=link
                     )
                     notices_created += 1
-                    self.stdout.write(self.style.SUCCESS(f'Created: {title} ({date_published})'))
+                    try:
+                        self.stdout.write(self.style.SUCCESS(f'Created: {title} ({date_published})'))
+                    except UnicodeEncodeError:
+                        self.stdout.write(self.style.SUCCESS(f'Created notice on ({date_published}) (Unicode title)'))
 
             if page_notices_found == 0:
                 self.stdout.write(self.style.WARNING(f'No notices found on page {page}. Stopping pagination.'))
