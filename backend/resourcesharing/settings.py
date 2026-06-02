@@ -69,7 +69,7 @@ else:
 DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = os.environ.get(
-    'ALLOWED_HOSTS', 'localhost,127.0.0.1,ltu-resource-sharing-backend-r91n.onrender.com'
+    'ALLOWED_HOSTS', 'localhost,127.0.0.1,ltu-resource-sharing-backend3.onrender.com'
 ).split(',')
 
 # Strip whitespace from host entries (common misconfiguration)
