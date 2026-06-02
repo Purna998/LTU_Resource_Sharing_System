@@ -432,3 +432,10 @@ CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1:5173',
     'https://ltu-resource-sharing-backend-r91n.onrender.com',
 ]
+# Dynamically trust our frontend domains and backend host
+for origin in CORS_ALLOWED_ORIGINS:
+    if origin not in CSRF_TRUSTED_ORIGINS:
+        CSRF_TRUSTED_ORIGINS.append(origin)
+for host in ALLOWED_HOSTS:
+    if host != '*' and host != 'localhost' and host != '127.0.0.1':
+        CSRF_TRUSTED_ORIGINS.append(f"https://{host}")
