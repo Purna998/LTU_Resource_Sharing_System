@@ -69,7 +69,7 @@ else:
 DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = os.environ.get(
-    'ALLOWED_HOSTS', 'localhost,127.0.0.1,ltu-resource-sharing-backend3.onrender.com'
+    'ALLOWED_HOSTS', 'localhost,127.0.0.1,ltu-resource-sharing-backend3.onrender.com,ltu-resource-sharing-backend-r91n.onrender.com'
 ).split(',')
 
 # Strip whitespace from host entries (common misconfiguration)
@@ -141,8 +141,8 @@ WSGI_APPLICATION = 'resourcesharing.wsgi.application'
 # ──────────────────────────────────────────────
 # Database — PostgreSQL via DATABASE_URL
 # ──────────────────────────────────────────────
-# Uses dj-database-url to parse DATABASE_URL (Render provides this automatically).
-# Fallback to SQLite ONLY in local development when DATABASE_URL is not set.
+# Uses dj-database-url to parse DATABASE_URL (Neon DB URL expected in production).
+# Fallback to local PostgreSQL ONLY in local development when DATABASE_URL is not set.
 _database_url = os.environ.get('DATABASE_URL')
 
 if _database_url:
@@ -156,14 +156,18 @@ if _database_url:
 else:
     if not DEBUG:
         raise ImproperlyConfigured(
-            "DATABASE_URL environment variable is required in production. "
-            "Set DJANGO_DEBUG=True for local SQLite development."
+            "DATABASE_URL environment variable is required in production (Use Neon DB connection string). "
+            "Set DJANGO_DEBUG=True for local PostgreSQL development."
         )
-    # Local development fallback
+    # Local development fallback (Postgres)
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get('DB_NAME', 'postgres'),
+            'USER': os.environ.get('DB_USER', 'postgres'),
+            'PASSWORD': os.environ.get('DB_PASSWORD', 'postgres'),
+            'HOST': os.environ.get('DB_HOST', '127.0.0.1'),
+            'PORT': os.environ.get('DB_PORT', '5432'),
         }
     }
 
@@ -171,7 +175,22 @@ else:
 # ──────────────────────────────────────────────
 # Cache — Redis
 # ──────────────────────────────────────────────
-REDIS_URL = os.environ.get('REDIS_URL', 'redis://127.0.0.1:6379/1')
+if DEBUG:
+    # Local Redis
+    REDIS_URL = os.environ.get('REDIS_URL', 'redis://127.0.0.1:6379/1')
+else:
+    # Production Upstash Redis
+    REDIS_URL = os.environ.get('REDIS_URL')
+    if not REDIS_URL:
+        raise ImproperlyConfigured(
+            "REDIS_URL environment variable is required in production. "
+            "Please provide your Upstash Redis connection string (e.g., rediss://default:password@endpoint:port)."
+        )
+
+# NOTE: You provided UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN.
+# However, Django's standard cache backend (django-redis) uses the Redis protocol, 
+# not REST. You should use the standard 'rediss://' URL provided by Upstash in 
+# the 'REDIS_URL' environment variable for Django caching to work properly.
 
 CACHES = {
     "default": {
