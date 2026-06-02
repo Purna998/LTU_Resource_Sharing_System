@@ -11,7 +11,7 @@ const Footer = () => {
         <div className="footer-top">
           <div className="footer-brand">
             <Link to="/" className="footer-logo">
-              <img src={logo} alt="Hamro Uni Logo" className="footer-logo-img" />
+              <img src={logo} alt="Platform Logo" className="footer-logo-img" />
               <div className="logo-text-wrapper">
                 <span className="logo-main-text-footer">Hamro Uni</span>
                 <span className="logo-sub-text-footer">Student Resource Sharing Platform</span>
@@ -19,7 +19,7 @@ const Footer = () => {
             </Link>
             <p className="footer-desc">
               © {new Date().getFullYear()} Hamro Uni · The digital library of
-              academic resources for all LTU students.
+              academic resources for all university students.
             </p>
             <div className="social-links">
               <a href="#" aria-label="Github"><Github size={18} /></a>

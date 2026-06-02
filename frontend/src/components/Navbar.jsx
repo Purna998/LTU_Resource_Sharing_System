@@ -58,7 +58,7 @@ const Navbar = ({ theme, toggleTheme }) => {
   const handleSearch = (e) => {
     e.preventDefault();
     if (suggestions.length > 0) {
-      navigate(`/subject/${suggestions[0].slug}`);
+      navigate(`/semesters/${suggestions[0].semester}/subjects`);
       setSearchQuery('');
       setShowSearchDropdown(false);
       setShowMobileSearch(false);
@@ -66,7 +66,7 @@ const Navbar = ({ theme, toggleTheme }) => {
   };
 
   const handleSuggestionClick = (sub) => {
-    navigate(`/subject/${sub.slug}`);
+    navigate(`/semesters/${sub.semester}/subjects`);
     setSearchQuery('');
     setShowSearchDropdown(false);
     setShowMobileSearch(false);
@@ -119,7 +119,7 @@ const Navbar = ({ theme, toggleTheme }) => {
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="container navbar-container">
         <Link to="/" className="navbar-logo">
-          <img src={logo} alt="Hamro Uni Logo" className="navbar-logo-img" />
+          <img src={logo} alt="Platform Logo" className="navbar-logo-img" />
           <div className="logo-text-wrapper">
             <span className="logo-main-text">Hamro Uni</span>
             <span className="logo-sub-text">Student Resource Sharing Platform</span>
@@ -152,6 +152,7 @@ const Navbar = ({ theme, toggleTheme }) => {
 
         <div className={`navbar-links ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
           <Link to="/" className={location.pathname === '/' ? 'active-link' : ''}>Home</Link>
+          <Link to="/notices" className={location.pathname === '/notices' ? 'active-link' : ''}>Notices</Link>
 
           {/* Department Dropdown */}
           <div
@@ -159,8 +160,8 @@ const Navbar = ({ theme, toggleTheme }) => {
             onMouseEnter={() => window.innerWidth > 768 && setShowDeptDropdown(true)}
             onMouseLeave={() => window.innerWidth > 768 && setShowDeptDropdown(false)}
           >
-            <button 
-              className="nav-dropdown-btn"
+            <button
+              className={`nav-dropdown-btn${location.pathname.startsWith('/departments') || location.pathname.startsWith('/semesters') || location.pathname.startsWith('/subjects') ? ' active-link' : ''}`}
               onClick={() => setShowDeptDropdown(!showDeptDropdown)}
             >
               Departments <ChevronDown size={16} />
@@ -177,7 +178,7 @@ const Navbar = ({ theme, toggleTheme }) => {
                     return (
                       <Link
                         key={dept.id}
-                        to={`/browse/${dept.slug}`}
+                        to={`/departments/${dept.id}/semesters`}
                         className="dropdown-item-premium"
                       >
                         <div className="dropdown-item-icon">
@@ -196,6 +197,7 @@ const Navbar = ({ theme, toggleTheme }) => {
           </div>
 
           <Link to="/about" className={location.pathname === '/about' ? 'active-link' : ''}>About</Link>
+
 
           {/* Desktop Only Toggle */}
           <button onClick={toggleTheme} className="theme-toggle-btn desktop-only" aria-label="Toggle Theme">

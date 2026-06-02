@@ -65,7 +65,7 @@ const HomePage = () => {
     e.preventDefault();
     if (suggestions.length > 0) {
       const bestMatch = suggestions[0];
-      navigate(`/subject/${bestMatch.slug}`);
+      navigate(`/semesters/${bestMatch.semester}/subjects`);
       setSearchQuery('');
       setShowDropdown(false);
     }
@@ -85,7 +85,7 @@ const HomePage = () => {
         <div className="container hero-container">
           <div className="hero-split-layout">
             <div className="hero-content-left">
-              <div className="hero-badge">Lumbini Technological University</div>
+              <div className="hero-badge">University Resource Portal</div>
               <h1 className="hero-title">
                 The Library of<br />
                 <span className="hero-title-accent">Innovation.</span>
@@ -126,7 +126,7 @@ const HomePage = () => {
                         key={sub.id}
                         className="search-dropdown-item"
                         onClick={() => {
-                          navigate(`/subject/${sub.slug}`);
+                          navigate(`/semesters/${sub.semester}/subjects`);
                           setSearchQuery('');
                           setShowDropdown(false);
                         }}
@@ -159,8 +159,8 @@ const HomePage = () => {
               <p className="section-subtitle">Select your field of study to access specialized curriculum materials.</p>
             </div>
             {/* Use the first department slug dynamically, not a hardcoded value */}
-            {firstDeptSlug && (
-              <Link to={`/browse/${firstDeptSlug}`} className="section-link">
+            {departments.length > 0 && (
+              <Link to={`/departments/${departments[0].id}/semesters`} className="section-link">
                 View All <ArrowRight size={16} />
               </Link>
             )}
@@ -179,7 +179,7 @@ const HomePage = () => {
             ) : departments.map(dept => {
               const Icon = IconMap[dept.icon_name] || FileText;
               return (
-                <Link to={`/browse/${dept.slug}`} key={dept.id} className="dept-card">
+                <Link to={`/departments/${dept.id}/semesters`} key={dept.id} className="dept-card">
                   <div className="dept-card-top">
                     <div className="dept-card-icon">
                       <Icon size={22} />

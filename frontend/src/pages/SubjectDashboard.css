@@ -114,6 +114,16 @@
   font-weight: 700;
 }
 
+.panel-count {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  background: var(--surface-alt);
+  border: 1px solid var(--border-color);
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-weight: 500;
+}
+
 .btn-primary-sm {
   background: var(--brand-accent);
   color: white;
@@ -197,7 +207,9 @@
 
 .resource-meta-chips {
   display: flex;
-  gap: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.875rem;
+  margin-top: 0.25rem;
 }
 
 .meta-chip {

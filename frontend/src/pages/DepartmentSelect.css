@@ -65,7 +65,7 @@
   flex-wrap: wrap;
 }
 
-/* Semester Selection */
+/* dept Selection */
 .semester-select-section {
   padding: 3rem 0 5rem;
 }
@@ -87,7 +87,7 @@
   font-size: 0.9rem;
 }
 
-/* Semester Grid */
+/* dept Grid */
 .semester-grid-exclusive {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));

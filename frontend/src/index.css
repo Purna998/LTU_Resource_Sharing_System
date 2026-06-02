@@ -39,31 +39,24 @@
   --hero-gradient-overlay: linear-gradient(135deg, rgba(15,37,87,0.97) 0%, rgba(26,58,110,0.93) 100%);
 }
 
+/* ─────────────────────────────────────────────
+   DARK MODE — proper variable overrides
+   ─────────────────────────────────────────────*/
 [data-theme='dark'] {
-  filter: invert(1) hue-rotate(180deg);
-  background-color: var(--bg-color); /* Ensure background is solid for inversion */
-}
+  --bg-color: #0b1120;
+  --surface-color: #111827;
+  --surface-alt: #1a2235;
+  --nav-bg: rgba(11, 17, 32, 0.97);
 
-/* Fix for elements that should not be inverted (images, 3D scenes, etc.) */
-[data-theme='dark'] img,
-[data-theme='dark'] video,
-[data-theme='dark'] .hero-content-right,
-[data-theme='dark'] .particles-wrapper,
-[data-theme='dark'] .navbar-logo-img,
-[data-theme='dark'] .footer-logo-img,
-[data-theme='dark'] .dept-card-icon,
-[data-theme='dark'] .dept-card-icon svg,
-[data-theme='dark'] .search-icon,
-[data-theme='dark'] .notices-heading svg,
-[data-theme='dark'] .btn-primary,
-[data-theme='dark'] .btn-outline {
-  filter: invert(1) hue-rotate(180deg);
-}
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
 
-/* Ensure background of body stays consistent */
-body {
-  background-color: var(--bg-color);
-  transition: filter 0.3s ease-in-out;
+  --border-color: #1e293b;
+  --border-strong: #334155;
+
+  --card-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.4);
+  --card-shadow-lg: 0 20px 40px -8px rgba(0, 0, 0, 0.6);
 }
 
 /* Reset & Base */
@@ -71,6 +64,12 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
@@ -82,12 +81,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   width: 100%;
-}
-
-html {
-  scroll-behavior: smooth;
-  overflow-x: hidden;
-  width: 100%;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 a {
@@ -103,6 +97,19 @@ button {
 }
 
 img { max-width: 100%; display: block; }
+
+/* ─────────────────────────────────────────────
+   App Layout — sticky footer
+   ─────────────────────────────────────────────*/
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+}
 
 /* Layout */
 .container {
@@ -165,6 +172,12 @@ img { max-width: 100%; display: block; }
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
 }
 
+.btn-primary:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
 .btn-outline {
   background: transparent;
   color: var(--brand-accent);
@@ -186,6 +199,27 @@ img { max-width: 100%; display: block; }
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
 }
 
+/* Back button */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 0.5rem 0.875rem;
+  border-radius: 8px;
+  border: 1.5px solid var(--border-color);
+  background: var(--surface-color);
+  transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+  color: var(--brand-accent);
+  border-color: rgba(37, 99, 235, 0.4);
+  background: rgba(37, 99, 235, 0.04);
+}
+
 /* Input */
 .input-field {
   width: 100%;
@@ -198,6 +232,7 @@ img { max-width: 100%; display: block; }
   outline: none;
   font-size: 0.95rem;
   transition: border-color 0.2s, box-shadow 0.2s;
+  -webkit-appearance: none;
 }
 
 .input-field:focus {
@@ -205,12 +240,17 @@ img { max-width: 100%; display: block; }
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
 }
 
+.input-field:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  background: var(--surface-alt);
+}
+
 /* Hero Gradient Section */
 .hero-gradient-bg {
   background: var(--hero-gradient);
   color: white;
-  padding: 4rem 0;
-  margin-bottom: 2rem;
+  padding: 3.5rem 0 3rem;
   position: relative;
   overflow: hidden;
 }
@@ -218,8 +258,11 @@ img { max-width: 100%; display: block; }
 .hero-gradient-bg::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
   pointer-events: none;
 }
 
@@ -227,12 +270,16 @@ img { max-width: 100%; display: block; }
   font-size: clamp(1.75rem, 4vw, 2.5rem);
   font-weight: 800;
   letter-spacing: -0.02em;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-gradient-bg p {
   opacity: 0.85;
   font-size: 1.05rem;
   max-width: 600px;
+  position: relative;
+  z-index: 1;
 }
 
 /* Breadcrumb */
@@ -246,7 +293,7 @@ img { max-width: 100%; display: block; }
   flex-wrap: wrap;
 }
 
-.breadcrumb a { transition: color 0.2s; }
+.breadcrumb a { transition: color 0.2s; cursor: pointer; }
 .breadcrumb a:hover { color: var(--text-primary); }
 
 .breadcrumb .current {
@@ -277,17 +324,76 @@ img { max-width: 100%; display: block; }
 
 /* Spacing Utilities */
 .py-8  { padding-top: 2rem;  padding-bottom: 2rem; }
-.py-12 { padding-top: 3rem;  padding-bottom: 3rem; }
+.py-12 { padding-top: 3rem;  padding-bottom: 5rem; }
 .py-20 { padding-top: 5rem;  padding-bottom: 5rem; }
+
+/* ─────────────────────────────────────────────
+   Loading Spinner
+   ─────────────────────────────────────────────*/
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  min-height: 60vh;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.loading-spinner::before {
+  content: '';
+  width: 44px;
+  height: 44px;
+  border: 3px solid var(--border-color);
+  border-top-color: var(--brand-accent);
+  border-radius: 50%;
+  animation: spin-loader 0.8s linear infinite;
+}
+
+@keyframes spin-loader {
+  to { transform: rotate(360deg); }
+}
+
+/* Error Container */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  min-height: 60vh;
+  padding: 2rem;
+  text-align: center;
+}
+
+.error-container p {
+  color: var(--text-secondary);
+  max-width: 400px;
+  line-height: 1.6;
+}
+
+.retry-btn {
+  background: var(--brand-accent);
+  color: white;
+  padding: 0.6rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.retry-btn:hover {
+  background: var(--brand-secondary);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
 
 /* ─────────────────────────────────────────────
    Skeleton Loading — Pulsing placeholders
    ─────────────────────────────────────────────*/
-@keyframes skeleton-pulse {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.45; }
-}
-
 .skeleton {
   background: linear-gradient(
     90deg,
@@ -335,4 +441,14 @@ img { max-width: 100%; display: block; }
 
 .animate-fade-in {
   animation: fadeIn 0.25s ease forwards;
+}
+
+/* Spin */
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
 }

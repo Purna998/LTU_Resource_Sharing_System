@@ -7,9 +7,9 @@ const AboutPage = () => {
     <div className="about-page">
       <section className="about-hero">
         <div className="container">
-          <h1 className="about-title">About Hamro Uni</h1>
+          <h1 className="about-title">About the Platform</h1>
           <p className="about-hero-text">
-            Hamro Uni is LTU's premier academic resource platform, providing comprehensive
+            Our portal is a premier academic resource platform, providing comprehensive
             study materials for all departments to help students excel in their academic journey.
           </p>
         </div>
@@ -23,8 +23,8 @@ const AboutPage = () => {
 
           <div className="mission-text-block">
             <p>
-              At Hamro Uni, our mission is to support students at
-              Lumbini Technological University by providing free, high-quality resources
+              Our mission is to support students across the
+              university by providing free, high-quality resources
               such as notes, question banks, lab solutions, and syllabuses.
             </p>
             <p>
@@ -73,7 +73,7 @@ const AboutPage = () => {
                 <div className="team-bio">
                   <p>
                     Passionate about creating accessible academic tools for the student community.
-                    Building Hamro Uni as a central hub for LTU students' growth and collaboration.
+                    Building this platform as a central hub for student growth and collaboration.
                   </p>
                 </div>
               </div>

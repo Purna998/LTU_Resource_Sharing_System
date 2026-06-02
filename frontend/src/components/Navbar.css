@@ -1,5 +1,5 @@
 /* ================================================
-   NAVBAR - LTU Scholar Blue Theme
+   NAVBAR - Resource Portal Theme
    ================================================ */
 
 .navbar {
@@ -57,14 +57,29 @@
 }
 
 .navbar-logo-img {
-  width: 80px;
-  height: 80px;
+  width: 44px;
+  height: 44px;
   object-fit: contain;
   transition: all 0.3s ease;
 }
 
-[data-theme='dark'] .navbar-logo {
-  color: var(--brand-accent-light);
+[data-theme='dark'] .navbar {
+  background: rgba(11, 17, 32, 0.97);
+  border-bottom-color: var(--border-color);
+}
+
+[data-theme='dark'] .logo-main-text {
+  color: var(--brand-accent-lighter);
+}
+
+[data-theme='dark'] .navbar-links > a,
+[data-theme='dark'] .nav-dropdown-btn {
+  color: var(--text-secondary);
+}
+
+[data-theme='dark'] .dropdown-menu-premium {
+  background: var(--surface-color);
+  border-color: var(--border-color);
 }
 
 .navbar-logo svg {
@@ -625,8 +640,8 @@
 
 @media (max-width: 480px) {
   .navbar-logo-img {
-    width: 50px !important;
-    height: 50px !important;
+    width: 36px !important;
+    height: 36px !important;
   }
 
   .logo-main-text {

@@ -1,0 +1,78 @@
+
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: app_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-app_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-app_secret_password}
+      POSTGRES_DB: ${POSTGRES_DB:-app_db}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-app_user} -d ${POSTGRES_DB:-app_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: app_redis
+    restart: always
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: app_backend
+    restart: always
+    environment:
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY:-your-super-secret-key-for-docker}
+      - DJANGO_DEBUG=False
+      - ALLOWED_HOSTS=localhost,127.0.0.1,backend
+      - SECURE_SSL_REDIRECT=${SECURE_SSL_REDIRECT:-False}
+      - SESSION_COOKIE_SECURE=${SESSION_COOKIE_SECURE:-False}
+      - CSRF_COOKIE_SECURE=${CSRF_COOKIE_SECURE:-False}
+      - DATABASE_URL=postgres://${POSTGRES_USER:-app_user}:${POSTGRES_PASSWORD:-app_secret_password}@db:5432/${POSTGRES_DB:-app_db}
+      - REDIS_URL=redis://redis:6379/1
+      - USE_S3=${USE_S3:-False}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-}
+      - AWS_STORAGE_BUCKET_NAME=${AWS_STORAGE_BUCKET_NAME:-}
+      - AWS_S3_REGION_NAME=${AWS_S3_REGION_NAME:-us-east-1}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py collectstatic --noinput &&
+             python manage.py shell -c \"from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.filter(username='admin').exists() or User.objects.create_superuser('admin', 'admin@example.com', 'admin')\" &&
+             gunicorn --bind 0.0.0.0:8000 resourcesharing.wsgi:application"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: app_frontend
+    restart: always
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
+  redis_data:
