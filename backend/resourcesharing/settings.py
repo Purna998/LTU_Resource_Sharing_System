@@ -432,5 +432,4 @@ CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1:5173',
     'https://ltu-resource-sharing-backend-r91n.onrender.com',
     'https://note-sharing-backend-n2y6.onrender.com',
-    ''
 ]
